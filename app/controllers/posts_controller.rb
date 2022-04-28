@@ -4,6 +4,7 @@ class PostsController < ApplicationController
 
     def index
         @posts = Post.all.limit(10).includes(:photos)
+        @userPosts = current_user.posts
         @post = Post.new
     end
 
@@ -24,7 +25,6 @@ class PostsController < ApplicationController
     end
 
     def show
-        @post = current_user.posts.find(params[:id])
     end
 
     private
