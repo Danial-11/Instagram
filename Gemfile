@@ -76,7 +76,7 @@ gem 'devise'
 
 # bootstrap
 gem 'bootstrap'
-
+gem 'jquery-rails'
 gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'carrierwave', '~> 1.0'

@@ -24,7 +24,7 @@ class PostsController < ApplicationController
     end
 
     def show
-        
+        @post = current_user.posts.find(params[:id])
     end
 
     private
