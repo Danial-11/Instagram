@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+    def index
+        @users = User.all
+    end
 
     def homepage
         if !user_signed_in?

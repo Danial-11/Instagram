@@ -1,1 +1,21 @@
-<p>Hello <%= current_user.username %></p>
+<div class="row justify-content-md-center profile-wrapper">
+    <div class="col-md-4 text-center">
+        
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <h1 class="username col-5"><%= current_user.username %></h1>
+            <button class="btn btn-outline-success col-2 mx-1">Edit Profile</button>
+                <button class="btn btn-outline-success col-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa-solid fa-gear"></button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+        </div>
+        <div class="row">
+            <h3 class="email"><%= current_user.email %></h3>
+        </div>
+    </div>
+</div>
+<%= link_to 'Create Post', posts_path %>
