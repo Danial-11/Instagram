@@ -5,9 +5,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  def self.search(term)
-    if term
-      where('username LIKE ?', "%#{term}%")
+  def self.search(username)
+    if username
+      where('username LIKE ?', "%#{username}%")
     else
       nil
     end

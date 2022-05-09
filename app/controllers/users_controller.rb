@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     end
 
     def search
-        @usersearch = User.search(params[:term])
+        @usersearch = User.search(params[:username])
         respond_to :js
     end
 
