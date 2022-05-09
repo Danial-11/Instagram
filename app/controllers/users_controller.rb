@@ -6,6 +6,11 @@ class UsersController < ApplicationController
         end
     end
 
+    def search
+        @usersearch = User.search(params[:term])
+        respond_to :js
+    end
+
     def edit
         @user = User.find(params[:id])
     end

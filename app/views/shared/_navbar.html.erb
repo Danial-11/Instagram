@@ -5,10 +5,14 @@
       Instagram-Clone
     </a>
   </div>
+  <div id="navbarSupportedContent">
+    <%= form_tag users_path, method: :get, class: "form-inline my-2 my-lg-0 ml-md-auto", id:"users-search", remote: true do %>
+      <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2 text-center", placeholder: "search" %>
+      <div id="users-result"></div>
+      <% end %>
+  </div>
+
   <div class="navigation-icons">
-    <a href="#" class="navigation-link">
-      <i class=""></i>
-    </a>
       <%= link_to '---', users_path , class: "far fa-user-circle" %>
       <%= link_to '', destroy_user_session_path , class: "fas fa-sign-out-alt" %>
   </div>
