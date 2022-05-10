@@ -32,7 +32,7 @@
                 <%= current_user.username %>
                 <hr>
                 <p><%= post.content %></p>
-                <% post.photos.each do |photo| %>
+                    <% post.photos.each do |photo| %>
                     <%= image_tag photo.image.url(:standard) %>
                     <hr>
                     <% end %>
@@ -42,5 +42,6 @@
     </div>
 
 </div>
+
 
 

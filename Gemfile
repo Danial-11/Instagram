@@ -81,3 +81,6 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'carrierwave', '~> 1.0'
 gem 'cloudinary'
+gem 'gravatar_image_tag'
+gem 'whenever'
+gem 'rubocop', require: false
