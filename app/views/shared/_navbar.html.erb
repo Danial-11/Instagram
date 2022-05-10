@@ -5,11 +5,8 @@
       Instagram-Clone
     </a>
   </div>
-  <div id="navbarSupportedContent">
-    <%= form_tag users_path, method: :get, class: "form-inline my-2 my-lg-0 ml-md-auto", id:"users-search", remote: true do %>
-      <%= text_field_tag :term, params[:username], class: "form-control mr-sm-2 text-center", placeholder: "search" %>
-      <div id="users-result"></div>
-      <% end %>
+  <div>
+    <%= render 'shared/search' %>
   </div>
 
   <div class="navigation-icons">

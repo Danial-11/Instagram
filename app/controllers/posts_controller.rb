@@ -1,44 +1,46 @@
+# frozen_string_literal: true
+
+# posts controller
 class PostsController < ApplicationController
-    before_action :authenticate_user!
-    before_action :find_post, only: [:show]
+  before_action :authenticate_user!
+  before_action :find_post, only: [:show]
 
-    def index
-        @posts = Post.all.limit(10).includes(:photos, :user, :likes)
-        @userPosts = current_user.posts
-        @post = Post.new
+  def index
+    @posts = Post.all.limit(10).includes(:photos, :user, :likes)
+    @userPosts = current_user.posts
+    @post = Post.new
+  end
+
+  def create
+    @post = current_user.posts.build(post_params)
+    images = params[:images]
+    if @post.save
+      images.each do |img|
+        @post.photos.create(image: img)
+      end
+      flash[:notice] = 'Saved'
+    else
+      flash[:alert] = 'Something went wrong!'
     end
+    redirect_to posts_path
+  end
 
-    def create
-        @post = current_user.posts.build(post_params)
-        if @post.save
-            if params[:images]
-                params[:images].each do |img|
-                    @post.photos.create(image: img)
-                end
-            end
-            flash[:notice] = "Saved"
-            redirect_to posts_path
-        else
-            flash[:alert] = "Something went wrong!"
-            redirect_to posts_path
-        end
-    end
+  def show
+    @likes = @post.likes.includes(:user)
+    @is_liked = @post.is_liked(current_user)
+  end
 
-    def show
-        @likes = @post.likes.includes(:user)
-        @is_liked = @post.is_liked(current_user)
-    end
+  private
 
-    private
+  def find_post
+    @post = Post.find(params[:id])
+    return if @post
 
-    def find_post
-        @post = Post.find_by id: params[:id]
-        return if @post
-        flash[:danger] = "Post does not exist!"
-        redirect_to root_path
-    end
+    flash[:danger] = 'Post does not exist!'
+    redirect_to root_path
+  end
 
-    def post_params
-        params.require(:post).permit(:content)
-    end
+  def post_params
+    params.require(:post).permit(:content)
+  end
 end
