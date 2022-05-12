@@ -1,6 +1,4 @@
 @import "bootstrap";
-
-@import url('//fonts.cdnfonts.com/css/billabong');
 body {
   background: #fafafa;
 }
@@ -118,4 +116,12 @@ body {
   padding: 50px;
   margin: 50px auto;
   width: 30%;
+}
+
+.search-result-item{
+  padding: 15px;
+}
+
+.search-result-item:hover{
+  background-color: #fafafa;
 }
