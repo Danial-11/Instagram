@@ -1,0 +1,93 @@
+<div class="d-flex flex-column align-items-center mt-3">
+    <div class = "col-xl-7 col-lq-8 col-md-10 col-sm-11 post-card">
+        <div class="card">
+            <div class="card-header">
+                <% @userPosts.each do |post| %>
+                <div class="card mt-3 post">
+                    <div class = "card-header">
+                        <%= link_to users_path(post.user), title: post.user.username do %>
+                        <h4><%= post.user.username %></h4>
+                        <hr>
+                        <% end %>
+                    <% if post.photos.size == 1 %>
+                        <%= image_tag post.photos.first.image.url(:standard), class: "card-img-top" %>
+                    <% else %>
+                      <div class="carousel slide" data-ride="carousel" id="carousel-post-<%= post.id %>">
+                        <div class="carousel-inner">
+                        <% post.photos.each do |photo| %>
+                          <% if photo = post.photos.first %>
+                            <div class="carousel-item active">
+                          <% else %>
+                            <div class="carousel-item">
+                          <% end %>
+                            <%= image_tag photo.image.url(:standard), class:"card-img-top"%>
+                          </div>
+                        <% end %>
+                        </div>
+                        <a class="carousel-control-prev" role="button" href="#carousel-post-<%= post.id %>" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" role="button" href="#carousel-post-<%= post.id %>" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    <% end %>
+                      </div>
+                    <div class="card-body">
+                        <div class="row actions mx-1">
+                            <% if post.is_liked(current_user).present? %>
+                              <%= link_to "Love", like_path(post.is_liked(current_user)), method: :delete, remote: true, class: "core-sprite loved hide-text" %>
+                            <% else %>
+
+                            <% end %>
+                            <a href="#" class="core-sprite comment hide-text">Comment</a>
+                        </div>
+                        <div class="mx-3">
+                            <strong>
+                            <% post.likes.each.with_index do |like, index| %>
+                                <% if post.likes.size == 1 %>
+                                    <%= like.user.username %> likes this
+                                <% elsif like == post.likes.last %>
+                                </strong>and<strong>
+                                <%= + like.user.username %></strong> likes this
+                                <% elsif index > 1 %>
+                                </strong><%= "and" +(post.like.size-index).to_s + " others" %> like this
+                                <% break %>
+                                <% elsif index==post.likes.size-2 || index == 1 %>
+                                    <%= like.user.username + ", " %>
+                                <% end %>
+                                <% end %>
+                            </strong>
+                        </div>
+
+                        <div class="mx-3">
+                            <span><strong><%= post.user.username %></strong></span>
+                            <span><%= post.content %></span>
+                        </div>
+                        <div class="light-color post-time mx-3 my-2"><%= time_ago_in_words(post.created_at) %> ago</div>
+                        <div id="comment-form-post-<%= @post.id.to_s %>">
+                          <% @post.comments.each do |comment| %>
+                            <div class="mb-2">
+                              <% if comment.user == current_user %>
+                              <%= link_to "Delete comment", comment_path(comment), method: :delete, remote: true, class: "core-sprite delete-comment hide-text" %>
+                              <% end %>
+                              <span><strong><%= comment.user.username %><strong></span>
+                              <%= comment.content %>
+                              <% end %>
+                              </div>
+                        <div class="row actions mx-1" id="comment-form-post-<%= @post.id.to_s %>">
+                            <%= form_for [post, Comment.new], :html => {:class => "w-100"}, remote: true do |f| %>
+                                <%= f.hidden_field :user_id, value: current_user.id %>
+                                <%= f.hidden_field :post_id, value: post.id %>
+                                <%= f.text_field :content, class: "form-control comment-input border-1", placeholder: "Add a comment ...", autocomplete: :off %>
+                                <% end %>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+    </div>
+  </div>
