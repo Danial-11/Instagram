@@ -3,7 +3,8 @@ import "controllers"
 
 //= require rails-ujs
 //= require turbolinks
-//= require jquery3
+//= require jquery
+//= require jquery_ujs
 //= require bootstrap-sprockets
 //= reuire dropzone
 //= require-tree

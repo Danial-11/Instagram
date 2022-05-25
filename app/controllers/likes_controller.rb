@@ -1,36 +1,12 @@
-# frozen_string_literal: true
-
-# Like controller
 class LikesController < ApplicationController
   before_action :authenticate_user!
-
   def create
-    ActiveRecord::Base.transaction do
-      @like = current_user.likes.build(like_params)
-      @post = @like.post
-      if @like.save
-        respont_to :js
-      else
-        flash[:alert] = 'something went wrong...'
-      end
-    end
+    like = current_user.likes.create(post_id: params[:post_id])
+    redirect_to posts_path
   end
 
   def destroy
-    ActiveRecord::Base.transaction do
-      @like = Like.find(params[:id])
-      @post = @like.post
-      if like.destroy
-        respont_to :js
-      else
-        flash[:alert] = 'Something went wrong...'
-      end
-    end
-  end
-
-  private
-
-  def like_params
-    params.permit[:post_id]
+    like = current_user.likes.find_by(id: params[:id]).destroy
+    redirect_to posts_path
   end
 end

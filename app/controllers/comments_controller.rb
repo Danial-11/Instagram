@@ -9,26 +9,31 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(comment_params)
-    if @comment.save
-      @post = @comment.post
-      redirect_to posts_path
-    else
-      flash[:alert] = 'Something went wrong ...'
+    ActiveRecord::Base.transaction do
+      @comment = Comment.new(comment_params)
+      if @comment.save
+        @post = @comment.post
+        redirect_to posts_path
+      else
+        flash[:alert] = 'Something went wrong ...'
+      end
     end
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
-    @post = @comment.post
-    if @comment.destroy
-      redirect_to posts_path
-    else
-      flash[:alert] = 'Something went wrong ...'
+    ActiveRecord::Base.transaction do
+      @comment = Comment.find(params[:id])
+      @post = @comment.post
+      if @comment.destroy
+        redirect_to posts_path
+      else
+        flash[:alert] = 'Something went wrong ...'
+      end
     end
   end
 
   private
+
   def comment_params
     params.require(:comment).permit(:user_id, :post_id, :content)
   end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # post controller
-
 class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_post, only: %i[show destroy]
@@ -16,7 +15,6 @@ class PostsController < ApplicationController
     ActiveRecord::Base.transaction do
       @post = current_user.posts.build(post_params)
       if @post.save
-        UserMailer.welcome.deliver_now
         if params[:images]
           params[:images].each do |img|
             @post.photos.create(image: img)
@@ -31,11 +29,25 @@ class PostsController < ApplicationController
     end
   end
 
+  def edit
+    @post = Post.find(params[:id])
+  end
+
+  def update
+    ActiveRecord::Base.transaction do
+      @post = Post.find(params[:id])
+      if @post.update(post_params)
+        redirect_to @post
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+  end
+
   def show
-    @photos = @photo.photos
-    @likes = @post.likes.includes(:user)
+    @posts = Post.all
+    @photos = @post.photos
     @comment = Comment.new
-    @is_liked = @post.is_liked(current_user)
   end
 
   def destroy
@@ -50,7 +62,7 @@ class PostsController < ApplicationController
         flash[:notice] = 'you do not have permission to do that...'
       end
     end
-    redirect_to root_path
+    redirect_to posts_path
   end
 
   private

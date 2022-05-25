@@ -2,7 +2,9 @@
 
 # User controller
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   def index
+    @user_posts = current_user.posts
     @users = User.includes(:posts)
     redirect_to new_user_session_path unless user_signed_in?
   end

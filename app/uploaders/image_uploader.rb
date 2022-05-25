@@ -11,10 +11,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   process tags: ['post_picture']
 
   version :standard do
-    process resize_to_fit: [300, 220, :center]
+    process resize_to_fit: [1080, 1080, :center]
   end
 
   version :thumbnail do
-    resize_to_fit(100, 100)
+    resize_to_fit(300, 100)
   end
 end

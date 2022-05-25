@@ -5,22 +5,32 @@
 Create story
 </div>
 <div class="card-body">
-    <%= form_for @story, :html => {:multipart => true, :class => "dropzone upload-images p-0 border-0"} do |f| %>
-    <%= f.label "Add caption", class: "control-label" %>
-    <%= f.text_field :caption, class: "text_field", required: true %>
+    <%= form_for @story, :html => {:multipart => true, :class => "p-0 border-0"} do |f| %>
+    <%= f.text_field :caption, class: "form-control", placeholder: "Insert caption", required: true %>
     <%= file_field_tag "images[]", type: :file, multiple: true , required: true %>
-    <%= f.submit "Story", class: "btn btn-default btn-outline-success" %>
+    <%= f.submit "Story", class: "btn btn-default btn-success mt-2 pull-right" %>
     <% end %>
             </div>
         </div>
-        <% @userStories.each do |story| %>
-    <%= current_user.username %>
-    <hr>
-    <p><%= story.caption %></p>
-    <% story.story_images.each do |photo| %>
-        <%= image_tag photo.image.url(:standard) %>
-        <hr>
-    <% end %>
-<% end %>
+    <br>
+        <% @stories.each do |story| %>
+    <div class="card w-50 mb-5">
+        <div class="card-header text-center">
+        <%= link_to users_path(story.user), title: story.user.username do %>
+        <h4><%= story.user.username %></h4>
+        <% end %>
+        </div>
+        <br>
+        <p class= "mx-2" ><%= story.caption %></p>
+        <%= button_to story_path(story), method: :delete, class: "ml-auto mx-0 my-auto pull-right" do %>
+        <i class = "far fa-trash-alt" aria-hidden = "true"></i>
+        <% end %>
+        <% story.story_images.each do |photo| %>
+        <div class="text-center mb-3">
+        <%= image_tag photo.image.url, class: "rounded-circle", width: "30%"%>
+        </div>
+        <% end %>
+        </div>
+        <% end %>
     </div>
 </div>

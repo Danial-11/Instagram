@@ -1,15 +1,19 @@
 <div class="row justify-content-md-center">
     <div class="col-md-4 text-center">
-
+    <% if current_user.image.present? %>
+      <%= image_tag current_user.image.url, class: "rounded-circle mt-4", width: "50%", height: "90%" %>
+    <% else %>
+      <%= image_tag 'gravatar-pic', class: "rounded-circle mt-4", width: "50%", height: "90%" %>
+    <% end %>
     </div>
+
     <div class="col-md-8">
         <div class="row mt-5">
             <h1 class="username col-5 mt-2"><%= current_user.username %></h1>
-            <button class="btn btn-success col-2 mx-1"><%= link_to 'Edit User', edit_user_path(current_user) %></button>
+            <button class="btn btn-success col-2 mx-1"><%= link_to 'Edit User', edit_user_registration_path(current_user), class: "text-white" %></button>
                 <button class="btn btn-success col-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa-solid fa-gear"></button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <%= link_to 'Logout', destroy_user_session_path, class: "dropdown-item" %>
-
                 </div>
         </div>
         <div class="row mt-3">
@@ -17,6 +21,25 @@
         </div>
         <%= link_to 'Create Post', posts_path, class: "btn btn-success" %>
         <%= link_to 'Add to story', stories_path, class: "btn btn-success" %>
+
+    </div>
+        <% @user_posts.each do |post| %>
+    <div class = "card w-50">
+        <div class = "card-header">
+        <%= link_to users_path(post.user), title: post.user.username do %>
+        <h4><%= post.user.username %></h4>
+        <% end %>
+        </div>
+         <p class= "mx-2" ><%= post.content %></p>
+        <%= button_to users_path(post), method: :delete, class: "ml-auto mx-0 my-auto pull-right" do %>
+        <i class = "far fa-trash-alt" aria-hidden = "true"></i>
+        <% end %>
+        <% post.photos.each do |photo| %>
+        <div class="mb-3">
+        <%= image_tag photo.image.url(:thumbnail) %>
+        </div>
+        <% end %>
+        </div>
+        <% end %>
     </div>
 </div>
-

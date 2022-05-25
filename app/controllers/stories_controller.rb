@@ -3,11 +3,11 @@
 # stories controller
 class StoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_story, only: [:show]
+  before_action :find_story, only: %i[show destroy]
 
   def index
-    @stories = Story.all.limit(10).includes(:story_images, :user)
-    @userStories = current_user.stories
+    @stories = Story.all.limit(1000).includes(:story_images, :user)
+    @user_stories = current_user.stories
     @story = Story.new
   end
 
@@ -29,10 +29,25 @@ class StoriesController < ApplicationController
 
   def show; end
 
+  def destroy
+    ActiveRecord::Base.transaction do
+      if @story.user == current_user
+        if @story.destroy
+          flash[:notice] = 'Story deleted'
+        else
+          flash[:alert] = 'Something went wrong ...'
+        end
+      else
+        flash[:notice] = 'you do not have permission to do that...'
+      end
+    end
+    redirect_to stories_path
+  end
+
   private
 
   def find_story
-    @story = Story.find_by id params[:id]
+    @story = Story.find(params[:id])
     return if @story
 
     flash[:danger] = 'Story does not exist'
