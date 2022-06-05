@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
+# i have been using this for while but this not good not showing green notifications
+
 module ApplicationHelper
+
   def bootstrap_class_for(flash_type)
     { success: 'alert-success', error: 'alert-danger', alert: 'alert-warning',
       notice: 'alert-info' }.stringify_keys[flash_type.to_s] || flash_type.to_s

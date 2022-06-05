@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# cloudinary credentials
 Cloudinary.config do |config|
   config.cloud_name = Rails.application.credentials.dig(:cloudinary, :cloud_name)
   config.api_key = Rails.application.credentials.dig(:cloudinary, :api_key)

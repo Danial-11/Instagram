@@ -19,4 +19,5 @@ Devise.setup do |config|
   config.sign_out_via = :get
   # Configuration for :confirmable
   config.allow_unconfirmed_access_for = 2.days
+  config.navigational_formats = ['*/*', :html, :turbo_stream]
 end

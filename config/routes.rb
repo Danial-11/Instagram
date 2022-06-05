@@ -1,9 +1,16 @@
+# frozen_string_literal: true
+
+# routes
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
 Rails.application.routes.draw do
   root 'posts#index'
-  devise_for :users, controllers: {
-    confirmations: 'users/confirmations'
-  }
-  resources :users
+  devise_for :users
+  resources :users do
+    post :follow, to: 'follows#create', as: :follow
+    delete :follow, to: 'follows#destroy', as: :unfollow
+  end
+  mount Sidekiq::Web => '/sidekiq'
   get '/search', to: 'users#search'
   resources :stories
   resources :posts do

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# production
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
@@ -23,7 +26,7 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   if ENV['RAILS_LOG_TO_STDOUT'].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end

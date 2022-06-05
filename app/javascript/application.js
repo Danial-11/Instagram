@@ -1,10 +1,8 @@
-import "@hotwired/turbo-rails"
-import "controllers"
-
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 //= require rails-ujs
-//= require turbolinks
-//= require jquery
-//= require jquery_ujs
+//= require jquery3
+//= require popper
 //= require bootstrap-sprockets
-//= reuire dropzone
-//= require-tree
+//= require dropzone
+//= require_tree .
+//= require toastr

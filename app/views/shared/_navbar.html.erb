@@ -1,8 +1,10 @@
 
 <div class="navigation">
   <div class="logo">
-    <a class="no-underline" href="#">
+    <a class="no-underline">
+  <%= link_to users_path(current_user) do %>
       Instagram-Clone
+  <% end %>
     </a>
   </div>
   <div>

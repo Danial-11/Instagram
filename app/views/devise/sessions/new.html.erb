@@ -1,7 +1,11 @@
 <div class="container">
   <div class="sign-in-container border border-dark">
+  <div class="text-center">
     <%= image_tag 'instagram', size: "200x100" %>
+  </div>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
       <div class="field">
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "registeration-fields" ,placeholder: "Email" %>
       </div>

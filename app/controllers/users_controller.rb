@@ -3,6 +3,7 @@
 # User controller
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_user, only: %i[edit update]
   def index
     @user_posts = current_user.posts
     @users = User.includes(:posts)
@@ -20,16 +21,12 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
+  def edit; end
 
   def update
     ActiveRecord::Base.transaction do
-      @user = User.find(params[:id])
-
       if @user.update(user_params)
-        redirect_to @user
+        redirect_to users_path
       else
         render :edit, status: :unprocessable_entity
       end
@@ -37,6 +34,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def find_user
+    @user = User.find_by id: params[:id]
+    return if @user
+
+    flash[:danger] = 'User does not exist!'
+    redirect_to root_path
+  end
 
   def user_params
     params.require(:user).permit(:username, :email)

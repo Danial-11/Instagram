@@ -6,39 +6,33 @@ class StoriesController < ApplicationController
   before_action :find_story, only: %i[show destroy]
 
   def index
-    @stories = Story.all.limit(1000).includes(:story_images, :user)
+    @stories = Story.all.limit(1000).includes(:photos, :user)
     @user_stories = current_user.stories
     @story = Story.new
   end
 
   def create
     @story = current_user.stories.create(story_params)
+    image = params[:images]
     if @story.save
-      if params[:images]
-        params[:images].each do |img|
-          @story.story_images.create(image: img)
-        end
+      image.each do |img|
+        @story.photos.create(image: img)
       end
-      flash[:notice] = 'Saved'
-      redirect_to stories_path
+      flash[:notice] = 'Post Created'
     else
       flash[:alert] = 'Something went wrong!'
-      redirect_to stories_path
     end
+    redirect_to stories_path
   end
 
   def show; end
 
   def destroy
     ActiveRecord::Base.transaction do
-      if @story.user == current_user
-        if @story.destroy
-          flash[:notice] = 'Story deleted'
-        else
-          flash[:alert] = 'Something went wrong ...'
-        end
+      if @story.destroy
+        flash[:notice] = 'Story deleted'
       else
-        flash[:notice] = 'you do not have permission to do that...'
+        flash[:alert] = 'Something went wrong ...'
       end
     end
     redirect_to stories_path

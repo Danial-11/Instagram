@@ -1,11 +1,7 @@
 @import "bootstrap";
+@import "toastr";
 body {
   background: #fafafa;
-}
-
-.core-sprite{
-  background-image: image-url("core-sprite.png");
-  background-repeat: no-repeat;
 }
 .hide-text{
   display: block;
@@ -128,20 +124,22 @@ body {
   margin: 50px auto;
   width: 30%;
 }
-.carousel-item.active{
-  opacity: 1;
-  display: block;
-}
-.carousel-item{
-  transition: opacity 0.6s ease-in-out;
-  opacity: 0;
-  position: relative;
-  display: block;
-}
-.carousel-item:not(.active){
-  position: absolute;
-  top: 0px;
-}
+  .carousel-item.active {
+    opacity: 1;
+    display: block;
+  }
+
+  .carousel-item {
+    transition: opacity 0.6s ease-in-out;
+    opacity: 0;
+    position: relative;
+    display: block;
+  }
+
+  .carousel-item:not(.active) {
+    position: absolute;
+    top: 0px;
+  }
 
   .card-header{
     background-color: white;
@@ -150,7 +148,7 @@ body {
     padding: 5px 16px 5px;
   }
   .actions{
-    margin: 12px 0;
+    margin: 5px 0;
   }
   .post-time{
     margin-top: 5px;
@@ -160,7 +158,3 @@ body {
     font-size: 14px;
     resize: none;
   }
-.liked{
-  width: 10px;
-  height: 10px;
-}
