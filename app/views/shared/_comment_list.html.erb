@@ -1,0 +1,14 @@
+<% post.comments.each do |comment| %>
+  <div class="mb-2">
+    <span>
+      <strong class =  "no-text-decoration normal-color">
+        <%= comment.user.username%>
+      </strong>
+    </span>
+    <span><%= comment.content %></span>
+    <% if comment.user %>
+      <%= button_to "Delete", comment_path(comment),
+        method: :delete, remote: true %>
+    <% end %>
+  </div>
+<% end %>

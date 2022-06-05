@@ -1,0 +1,22 @@
+<div class="d-flex flex-column align-items-center mt-3">
+<div class="col-xl-7 col-lq-8 col-md-10 col-sm-11 post-card">
+<div class="card">
+<div class="card-header">
+Create Post
+</div>
+<div class="card-body">
+    <%= form_for @post, :html => {:multipart => true, :class => "p-0 border-0"} do |f| %>
+    <div class="form-group row mt-2">
+        <div class="col pl-0">
+            <%= f.text_field :content, class: "form-control border-1", placeholder: "Insert caption", required: true %>
+        </div>
+        <div>
+            <%= file_field_tag "images[]", type: :file, multiple: true , required: true, class: "mt-2" %>
+             <%= f.submit "Post", class: "btn btn-success pull-right" %>
+        </div>
+    </div>
+    <% end %>
+            </div>
+        </div>
+    </div>
+</div>

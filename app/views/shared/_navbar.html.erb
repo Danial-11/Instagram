@@ -1,15 +1,18 @@
 
 <div class="navigation">
   <div class="logo">
-    <a class="no-underline" href="#">
+    <a class="no-underline">
+  <%= link_to users_path(current_user) do %>
       Instagram-Clone
+  <% end %>
     </a>
   </div>
+  <div>
+    <%= render 'shared/search' %>
+  </div>
+
   <div class="navigation-icons">
-    <a href="#" class="navigation-link">
-      <i class=""></i>
-    </a>
-      <%= link_to '---', user_session_path , class: "far fa-user-circle" %>
+      <%= link_to '---', users_path , class: "far fa-user-circle" %>
       <%= link_to '', destroy_user_session_path , class: "fas fa-sign-out-alt" %>
   </div>
 </div>

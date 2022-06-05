@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
+# cloudinary credentials
 Cloudinary.config do |config|
-    config.cloud_name = "dani-cloud"
-    config.api_key = "578269343123934"
-    config.api_secret = "8zGkLBTXpJTtUVD9WKcFf9H3HcY"
-    config.cdn_subdomain = "CLOUDINARY_URL=cloudinary://578269343123934:8zGkLBTXpJTtUVD9WKcFf9H3HcY@dani-cloud"
+  config.cloud_name = Rails.application.credentials.dig(:cloudinary, :cloud_name)
+  config.api_key = Rails.application.credentials.dig(:cloudinary, :api_key)
+  config.api_secret =  Rails.application.credentials.dig(:cloudinary, :api_secret)
+  config.cdn_subdomain = Rails.application.credentials.dig(:cloudinary, :cdn_subdomain)
 end

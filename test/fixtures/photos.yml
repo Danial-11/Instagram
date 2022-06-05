@@ -3,7 +3,9 @@
 one:
   image: MyString
   post: one
+  story: one
 
 two:
   image: MyString
   post: two
+  story: two
