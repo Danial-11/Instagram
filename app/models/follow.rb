@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# class follow
 class Follow < ApplicationRecord
   belongs_to :follower, class_name: 'User', foreign_key: 'follower_id',
                         counter_cache: :followings_count,

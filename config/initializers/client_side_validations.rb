@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActionView::Base.field_error_proc = proc do |html_tag, instance|
   if /^<label/.match?(html_tag)
     %(<div class=“field_with_errors1”>#{html_tag}</div>)

@@ -3,7 +3,7 @@
 # post controller
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_post, only: %i[show destroy edit update]
+  before_action :find_post, only: %i[destroy edit update]
 
   def index
     @posts = Post.includes(:photos, :user, :likes).order('created_at desc').paginate(page: params[:page],
@@ -18,8 +18,6 @@ class PostsController < ApplicationController
         image = params[:images]
         if image.present?
           image.each do |img|
-            puts 'HELLO'
-            puts @post.id
             @post.photos.create!(image: img)
           end
         end
@@ -42,12 +40,6 @@ class PostsController < ApplicationController
         render :edit, status: :unprocessable_entity
       end
     end
-  end
-
-  def show
-    @posts = Post.all
-    @photos = @post.photos
-    @comment = Comment.new
   end
 
   def destroy
