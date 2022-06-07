@@ -9,6 +9,9 @@
     <% if comment.user %>
       <%= button_to "Delete", comment_path(comment),
         method: :delete, remote: true %>
+        <%= button_to edit_comment_path(comment) do %>
+          <i class = "fas fa-edit" aria-hidden = "true"></i>
+        <% end %>
     <% end %>
   </div>
 <% end %>

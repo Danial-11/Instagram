@@ -5,13 +5,11 @@
 Create story
 </div>
 <div class="card-body">
-    <% if policy(@story).create? %>
         <%= form_for @story, :html => {:multipart => true, :class => "p-0 border-0"} do |f| %>
         <%= f.text_field :caption, class: "form-control", placeholder: "Insert caption", required: true %>
         <%= file_field_tag "images[]", type: :file, multiple: true , required: true %>
         <%= f.submit "Story", class: "btn btn-default btn-success mt-2 pull-right" %>
         <% end %>
-    <% end %>
             </div>
         </div>
     <br>
@@ -24,11 +22,9 @@ Create story
         </div>
         <br>
         <p class= "mx-2" ><%= story.caption %></p>
-        <% if policy(@story).destroy? %>
             <%= button_to story_path(story), method: :delete, class: "ml-auto mx-0 my-auto pull-right" do %>
             <i class = "far fa-trash-alt" aria-hidden = "true"></i>
             <% end %>
-        <% end %>
         <% story.photos.each do |photo| %>
         <div class="text-center mb-3">
         <%= image_tag photo.image.url, class: "rounded-circle", width: "30%"%>

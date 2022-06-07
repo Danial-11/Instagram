@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   end
 
   def search
+    @user_posts = current_user.posts
     @users = User.includes(:posts)
     @query = params[:query]
     @usersearch = User.find_by(username: @query)

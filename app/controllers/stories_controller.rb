@@ -18,7 +18,7 @@ class StoriesController < ApplicationController
       image.each do |img|
         @story.photos.create(image: img)
       end
-      flash[:notice] = 'Post Created'
+      flash[:notice] = 'Story Created'
     else
       flash[:alert] = 'Something went wrong!'
     end
@@ -42,6 +42,7 @@ class StoriesController < ApplicationController
 
   def find_story
     @story = Story.find(params[:id])
+    authorize @story
     return if @story
 
     flash[:danger] = 'Story does not exist'

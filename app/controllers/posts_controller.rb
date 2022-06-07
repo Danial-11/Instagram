@@ -35,7 +35,7 @@ class PostsController < ApplicationController
   def update
     ActiveRecord::Base.transaction do
       if @post.update(post_params)
-        redirect_to @post
+        redirect_to posts_path
       else
         render :edit, status: :unprocessable_entity
       end
@@ -59,6 +59,7 @@ class PostsController < ApplicationController
 
   def find_post
     @post = Post.find_by id: params[:id]
+    authorize @post
     return if @post
 
     render 'post_not_found'

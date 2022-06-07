@@ -7,13 +7,9 @@
                     <div class = "card-header">
                         <%= link_to users_path(post.user), title: post.user.username do %>
                         <h4><%= post.user.username %></h4>
-                        <h4><%= post.id %></h4>
-                        <%# <% if post.user == current_user %>
                           <%= button_to post_path(post), method: :delete, class: "ml-auto delete-post-icon mx-0 my-auto pull-right" do %>
                             <i class = "far fa-trash-alt" aria-hidden = "true"></i>
                             <% end %>
-                        <%# <% else %>
-                        <%# <% end %>
                           <%= link_to edit_post_path(post) do %>
                              <i class = "fas fa-edit" aria-hidden = "true"></i>
                           <% end %>

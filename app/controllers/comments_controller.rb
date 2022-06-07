@@ -3,6 +3,7 @@
 # comments controller
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
 
   def index
     @comments = @post.comments.includes(:user)
@@ -20,9 +21,25 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit
+    @comment = Comment.find(params[:id])
+  end
+
+  def update
+    @comment = Comment.find(params[:id])
+    ActiveRecord::Base.transaction do
+      if @commnet.update(comment_params)
+        redirect_to posts_path
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+  end
+
   def destroy
     ActiveRecord::Base.transaction do
       @comment = Comment.find(params[:id])
+      authorize @comment
       @post = @comment.post
       if @comment.destroy
         redirect_to posts_path
